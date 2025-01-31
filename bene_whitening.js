@@ -33,10 +33,10 @@ function calcStart(){
     var monthly_maxtreatment_str = document.getElementById("max_treatment").value;
     var monthly_maxtreatment = parseInt(monthly_maxtreatment_str.replace(/,/g,""));
 
-    var sufficiency_profit_str = document.getElementById("monthly_profit").value;
+    var sufficiency_profit_str = String(sufficiency_profit_str);
     var sufficiency_profit = parseInt(sufficiency_profit_str.replace(/,/g,""));
 
-    var month_str = document.getElementById("sufficiency_month").value;
+    var month_str = String(month_str);
     var month = parseInt(month_str.replace(/,/g,""));
 
     var sufficiency_profit2_str = document.getElementById("monthly_profit2").value;
@@ -65,18 +65,12 @@ function calcStart(){
     monthly_maxtreatment_str = monthly_maxtreatment.toLocaleString();
     document.getElementById("max_treatment").value = monthly_maxtreatment_str;
 
-    sufficiency_profit_str = sufficiency_profit.toLocaleString();
-    document.getElementById("monthly_profit").value = sufficiency_profit_str;
-
     human_cost_str = human_cost.toLocaleString();
     document.getElementById("personnel_cost").value = human_cost_str;
 
     room_cost_str = room_cost.toLocaleString();
     document.getElementById("rent_cost").value = room_cost_str;
     
-    month_str = month.toLocaleString();
-    document.getElementById("sufficiency_month").value = month_str;
-
     sufficiency_profit2_str = sufficiency_profit2.toLocaleString();
     document.getElementById("monthly_profit2").value = sufficiency_profit2_str;
 
