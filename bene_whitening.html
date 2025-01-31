@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>収益シミュレーション</title>
+    <link rel = "stylesheet" href = "./bene_white.css">
+    <script>
+    function calcStart(){
+        console.log("debug");
+        //変数を宣言
+        var installtion = document.getElementById("installtion_number").value;
+        var business = document.getElementById("business_number").value;
+        var time = document.getElementById("business_hour").value;
+        var percent = document.getElementById("operation_percent").value;
+        var human_cost = document.getElementById("personnel_cost").value;
+        var room_cost = document.getElementById("rent_cost").value;
+        var monthly_maxtreatment;
+        var suffciency_profit;
+        var month;
+        var sufficiency_profit2;
+        var month2;
+
+        //計算するための最低条件
+        if(!human_cost || !room_cost){
+                alert('必須項目を全て入力してください');
+                return ;
+            }
+
+        if(human_cost<0 || room_cost<0){
+                alert('0より小さい数字は入力が出来ません')
+                return ;
+        }
+
+        //最大施術可能数
+        monthly_maxtreatment = max(installtion,business,time);
+        document.getElementById("max_treatment").value = monthly_maxtreatment;
+
+        //月間粗利益見込み
+        sufficiency_profit  = profit(monthly_maxtreatment,percent);
+        document.getElementById("monthly_profit").value = sufficiency_profit;
+
+        //初期費用充足期間
+        month = prospect_month(installtion,sufficiency_profit);
+        document.getElementById("sufficiency_month").value = month;
+
+        //月間売上見込み（人件費と家賃を除算）
+        sufficiency_profit2 = profit2(suffciency_profit,human_cost,room_cost);
+        document.getElementById("monthly_profit2").value = sufficiency_profit2;
+
+        //初期費用充足期間（人件費と家賃を除算した月間売上見込みと導入数から計算
+        month2 = prospect_month2(installtion,sufficiency_profit2);
+        document.getElementById("sufficiency_month2").value = month2;
+    }
+
+        function max(installtion,business,time){
+            return installtion * business * time;
+        }
+
+        function profit(monthly_maxtreatment,percent){
+            return monthly_maxtreatment * 5000 * (percent/100);
+        }
+
+        function prospect_month(installtion,sufficiency_profit){
+            month = (1540000 * installtion)/sufficiency_profit;
+            month = month *10;
+            month = Math.round(month);
+            return month/10;
+        }
+
+        function profit2(suffciency_profit,human_cost,room_cost){
+            return sufficiency_profit - human_cost - room_cost;
+        }
+
+        function prospect_month2(installtion,sufficiency_profit2){
+            month2 = (1540000 * installtion)/sufficiency_profit2;
+            month2 = month2 *10;
+            month2 = Math.round(month2);
+            return month2/10;
+        }
+
+    </script>
+    <h1><span>ベネホワイトニング標準収益シミュレーション</span></h1>
+    <table>
+        <thead>
+          <tr>
+            <th class = "column_record">項目</th>
+            <th class = "column_number">数</th>
+            <th class = "column_unit">単位</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td class = "name">ベネホワイトニング機材導入数</td>
+            <td class = "record"><input id="installtion_number" type="number" min="1" max="10" step="1" value="1" style="width:50px;"></td>
+            <td class = "unit">台</td>
+            </tr>
+
+            <tr>
+            <td class = "name">月間営業数</td>
+            <td class = "record"><input id="business_number" type="number" min="10" max="30" step="1" value="21" style="width:50px;"></td>
+            <td class = "unit">日</td>
+            </tr>
+           
+            <tr>
+            <td class = "name">日の営業時間</td>
+            <td class = "record"><input id="business_hour" type="number" min="2" max="24" step="1" value="8" style="width:50px;"></td>
+            <td class = "unit">時間</td>
+            </tr>
+        
+            <tr>
+            <td class = "name">最大施術可能数</td>
+            <td class = "record"><input id="max_treatment" type="text" tabindex="-1" readonly></td>
+            <td class = "unit">件</td>
+            </tr>
+        
+            <tr>
+            <td class = "name">想定稼働率</td>
+            <td class = "record"><input id="operation_percent" type="number" min="10" max="100" step="10" value="50" style="width:50px;"></td>
+            <td class = "unit">%</td>
+            </tr>
+        
+            <tr>
+            <td class = "name">月間粗利益見込み</td>
+            <td class = "record"><input id="monthly_profit" type="text" tabindex="-1"  readonly></td>
+            <td class = "unit">円/月</td>
+            </tr>
+        
+            <tr>
+            <td class = "name">初期費用充足期間</td>
+            <td class = "record"><input id="sufficiency_month" type="text" tabindex="-1" readonly></td>
+            <td class = "unit">ヶ月</td>
+            </tr>
+
+            <tr>
+            <td class = "name">人権費</td>
+            <td class = "record"><input id="personnel_cost" type="text"></td>
+            <td class = "unit">円/月</td>
+            </tr>
+        
+            <tr>
+            <td class = "name">家賃</td>
+            <td class = "record"><input id="rent_cost" type="text"></td>
+            <td class = "unit">円/月</td>
+            </tr>
+
+            <tr>
+            <td class = "name">月間粗利益見込み</td>
+            <td class = "record"><input id="monthly_profit2" type="text" readonly tabindex="-1"></td>
+            <td class = "unit">円/月</td>
+            </tr>
+        
+            <tr>
+            <td class = "name">初期費用充足期間</td>
+            <td class = "record"><input id="sufficiency_month2" type="text" readonly tabindex="-1"></td>
+            <td class = "unit">ヶ月</td>
+            </tr>
+        </tbody>
+    </table>
+        <br>
+        <button onclick = "calcStart()">計算</button>
+</head>
+</html>
