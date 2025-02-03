@@ -2,110 +2,110 @@
 function calcStart(){
     
     //変数を宣言(文字型を数字型に変換)
-    var installtion_str = document.getElementById("installtion_number").value;
-    var installtion = parseInt(installtion_str.replace(/,/g,""));
-    if(checkInputValue(installtion,"ベネホワイトニング機材導入数") == false){
+    var dounyuu_str = document.getElementById("dounyuu_number").value;
+    var dounyuu = parseInt(dounyuu_str.replace(/,/g,""));
+    if(checkInputValue(dounyuu,"ベネホワイトニング機材導入数") == false){
         return;
     }
 
-    var business_str = document.getElementById("business_number").value;
-    var business = parseInt(business_str.replace(/,/g,""));
-    if(checkInputValue(business,"月間営業数") == false){
+    var eigyoubi_str = document.getElementById("eigyou_number").value;
+    var eigyoubi = parseInt(eigyoubi_str.replace(/,/g,""));
+    if(checkInputValue(eigyoubi,"月間営業数") == false){
         return;
     }
 
-    var time_str = document.getElementById("business_hour").value;
-    var time = parseInt(time_str.replace(/,/g,""));
-    if(checkInputValue(time,"日の営業時間") == false){
+    var eigyoujikan_str = document.getElementById("eigyou_time").value;
+    var eigyoujikan = parseInt(eigyoujikan_str.replace(/,/g,""));
+    if(checkInputValue(eigyoujikan,"日の営業時間") == false){
         return;
     }
 
-    var percent_str = document.getElementById("operation_percent").value;
-    var percent = parseInt(percent_str.replace(/,/g,""));
-    if(checkInputValue(percent,"想定稼働率") == false){
+    var kadouritsu_str = document.getElementById("operation_percent").value;
+    var kadouritsu = parseInt(kadouritsu_str.replace(/,/g,""));
+    if(checkInputValue(kadouritsu,"想定稼働率") == false){
         return;
     }
 
-    var human_cost_str= document.getElementById("personnel_cost").value;
-    var human_cost = parseInt(human_cost_str.replace(/,/g,""));
-    if(checkInputValue(human_cost,"人件費")==false){
+    var jinnkennhi_str= document.getElementById("personnel_cost").value;
+    var jinnkennhi = parseInt(jinnkennhi_str.replace(/,/g,""));
+    if(checkInputValue(jinnkennhi,"人件費")==false){
         return;
     }
 
-    var room_cost_str = document.getElementById("rent_cost").value;
-    var room_cost = parseInt(room_cost_str.replace(/,/g,""));
-    if(checkInputValue(room_cost,"家賃") == false){
+    var yachin_str = document.getElementById("rent_cost").value;
+    var yachin = parseInt(yachin_str.replace(/,/g,""));
+    if(checkInputValue(yachin,"家賃") == false){
         return;
     }
 
-    var monthly_maxtreatment_str = document.getElementById("max_treatment").value;
-    var monthly_maxtreatment = parseInt(monthly_maxtreatment_str.replace(/,/g,""));
+    var gekkann_maxsejutsu_str = document.getElementById("max_sejutsu").value;
+    var gekkann_maxsejutsu = parseInt(gekkann_maxsejutsu_str.replace(/,/g,""));
 
-    var sufficiency_profit_str = String(sufficiency_profit_str);
-    var sufficiency_profit = parseInt(sufficiency_profit_str.replace(/,/g,""));
+    var gekkann_arari_str = String(gekkann_arari_str);
+    var gekkann_arari = parseInt(gekkann_arari_str.replace(/,/g,""));
 
     var month_str = String(month_str);
     var month = parseInt(month_str.replace(/,/g,""));
 
-    var sufficiency_profit2_str = document.getElementById("monthly_profit2").value;
-    var sufficiency_profit2 = parseInt(sufficiency_profit2_str.replace(/,/g,""));
+    var gekkann_rieki_str = document.getElementById("monthly_rieki").value;
+    var gekkan_rieki = parseInt(gekkann_rieki_str.replace(/,/g,""));
 
-    var month2_str = document.getElementById("sufficiency_month2").value;
-    var month2 = parseInt(month2_str.replace(/,/g,""));
+    var juusoku_kikan_str = document.getElementById("juusoku_month").value;
+    var juusoku_kikan = parseInt(juusoku_kikan_str.replace(/,/g,""));
 
     //計算する項目を入力する時点での条件
-    if(over(installtion,1,10,"ベネホワイトニング機材導入数") == false){
+    if(checkInput_range(dounyuu,1,10,"ベネホワイトニング機材導入数") == false){
         return;
     }
 
-    if(over(business,1,30,"月間営業数") == false){
+    if(checkInput_range(eigyoubi,1,30,"月間営業数") == false){
         return;
     }
 
-    if(over(time,2,24,"日の営業時間") == false){
+    if(checkInput_range(eigyoujikan,2,24,"日の営業時間") == false){
         return;
     }
 
-    if(over(percent,10,100,"想定稼働率") == false){
+    if(checkInput_range(kadouritsu,10,100,"想定稼働率") == false){
         return;
     }
 
     //最大施術可能数
-    monthly_maxtreatment = max_t(installtion,business,time);
+    gekkann_maxsejutsu = max_sejutsukanou(dounyuu,eigyoubi,eigyoujikan);
     
     //初期費用充足期間の計算に使用する月間粗利益見込み
-    sufficiency_profit = profit(monthly_maxtreatment,percent);
+    gekkann_arari = arari_mikomi(gekkann_maxsejutsu,kadouritsu);
     
     //初期費用充足期間に使う計算
-    month = prospect_month(installtion,sufficiency_profit);
+    month = juusoku(dounyuu,gekkann_arari);
     
     //月間売上見込み（人件費と家賃を除算）
-    sufficiency_profit2 = profit2(sufficiency_profit,human_cost,room_cost);
+    gekkan_rieki = rieki_mikomi(gekkann_arari,jinnkennhi,yachin);
     
     //初期費用充足期間（人件費と家賃を除算した月間売上見込みと導入数から計算
-    month2 = prospect_month2(installtion,sufficiency_profit2);
+    juusoku_kikan = syokitoushi_juusoku(dounyuu,gekkan_rieki);
 
     //計算結果がマイナスになった時の条件分岐
-    if(minus(sufficiency_profit2,month2) == false){
+    if(gekkan_rieki<0 || juusoku_kikan<0){
         alert ('計算結果がマイナスのため、表示出来ません')
         return;
     }
 
     //数字型を文字型に変換（小数に変換）
-    monthly_maxtreatment_str = monthly_maxtreatment.toLocaleString();
-    document.getElementById("max_treatment").value = monthly_maxtreatment_str;
+    gekkann_maxsejutsu_str = gekkann_maxsejutsu.toLocaleString();
+    document.getElementById("max_sejutsu").value = gekkann_maxsejutsu_str;
 
-    human_cost_str = human_cost.toLocaleString();
-    document.getElementById("personnel_cost").value = human_cost_str;
+    jinnkennhi_str = jinnkennhi.toLocaleString();
+    document.getElementById("personnel_cost").value = jinnkennhi_str;
 
-    room_cost_str = room_cost.toLocaleString();
-    document.getElementById("rent_cost").value = room_cost_str;
+    yachin_str = yachin.toLocaleString();
+    document.getElementById("rent_cost").value = yachin_str;
     
-    sufficiency_profit2_str = sufficiency_profit2.toLocaleString();
-    document.getElementById("monthly_profit2").value = sufficiency_profit2_str;
+    gekkan_rieki_str = gekkan_rieki.toLocaleString();
+    document.getElementById("monthly_rieki").value = gekkan_rieki_str;
 
-    month2_str = month2.toLocaleString();
-    document.getElementById("sufficiency_month2").value = month2_str;
+    juusoku_kikan_str = juusoku_kikan.toLocaleString();
+    document.getElementById("juusoku_month").value = juusoku_kikan_str;
 
 }
     //入力値のチェック
@@ -131,34 +131,34 @@ function calcStart(){
     }
 
    //表内の計算メソッド
-    function max_t(installtion,business,time){
-        return installtion * business * time;
+    function max_sejutsukanou(dounyuu,eigyoubi,eigyoujikan){
+        return dounyuu * eigyoubi * eigyoujikan;
     }
 
-    function profit(monthly_maxtreatment,percent){
-        return monthly_maxtreatment * 5000 * (percent/100);
+    function arari_mikomi(gekkann_maxsejutsu,kadouritsu){
+        return gekkann_maxsejutsu * 5000 * (kadouritsu/100);
     }
 
-    function prospect_month(installtion,sufficiency_profit){
-        month = (1540000 * installtion)/sufficiency_profit;
+    function juusoku(dounyuu,gekkann_arari){
+        month = (1540000 * dounyuu)/gekkann_arari;
         month = month *10;
         month = Math.round(month);
         return month/10;
     }
 
-    function profit2(sufficiency_profit,human_cost,room_cost){
-        return sufficiency_profit - human_cost - room_cost;
+    function rieki_mikomi(gekkann_arari,jinnkennhi,yachin){
+        return gekkann_arari - jinnkennhi - yachin;
     }
 
-    function prospect_month2(installtion,sufficiency_profit2){
-        month2 = (1540000 * installtion)/sufficiency_profit2;
-        month2 = month2 *10;
-        month2 = Math.round(month2);
-        return month2/10;
+    function syokitoushi_juusoku(dounyuu,gekkan_rieki){
+        juusoku_kikan = (1540000 * dounyuu)/gekkan_rieki;
+        juusoku_kikan = juusoku_kikan *10;
+        juusoku_kikan = Math.round(juusoku_kikan);
+        return juusoku_kikan/10;
     }
 
     //エラー発生時のメソッド
-    function over(value,min,max,columName){
+    function checkInput_range(value,min,max,columName){
         if(value>max || value<min){
             alert(columName + ' 範囲外の数字は入力出来ません');
             return false;
@@ -168,11 +168,3 @@ function calcStart(){
         }
     }
 
-    function minus(sufficiency_profit2,month2){
-        if(sufficiency_profit2<0 || month2<0){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
