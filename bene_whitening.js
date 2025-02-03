@@ -1,7 +1,5 @@
 
 function calcStart(){
-    console.log("debug");
-
     
     //変数を宣言(文字型を数字型に変換)
     var installtion_str = document.getElementById("installtion_number").value;
@@ -37,6 +35,7 @@ function calcStart(){
     var month2_str = document.getElementById("sufficiency_month2").value;
     var month2 = parseInt(month2_str.replace(/,/g,""));
 
+    //計算する項目を入力する時点での条件
     if(zero(human_cost,room_cost,business,percent,time,installtion) == false){
         alert ('0は入力出来ません');
         return;
@@ -73,6 +72,7 @@ function calcStart(){
     //初期費用充足期間（人件費と家賃を除算した月間売上見込みと導入数から計算
     month2 = prospect_month2(installtion,sufficiency_profit2);
 
+    //計算結果がマイナスになった時の条件分岐
     if(minus(sufficiency_profit2,month2) == false){
         alert ('計算結果がマイナスのため、表示出来ません')
         return;
@@ -135,7 +135,7 @@ function calcStart(){
     }
 
     function over(business,percent,time,installtion){
-        if(business>30 || percent>100 || time>24 || installtion>10){
+        if(business>30||business<10 || percent>100||percent <10 || time>24||time<2 || installtion>10){
             return false;
         }
         else{
