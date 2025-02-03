@@ -1,29 +1,9 @@
 
-
-
-
-
-function fff(human_cost,room_cost,business,percent,time,installtion){
-    if(!human_cost||!room_cost||!business||!percent||!time||!installtion){
-        return false;
-    }
-    else{
-        return true;
-    }
-}
-
-
-
-
-
 function calcStart(){
     console.log("debug");
-    //変数を宣言(文字型を数字型に変換)
+
     
-    if(fff(human_cost,room_cost,business,percent,time,installtion)== false){
-        alert("必須項目を入力してください");
-        return;
-    }
+    //変数を宣言(文字型を数字型に変換)
     var installtion_str = document.getElementById("installtion_number").value;
     var installtion = parseInt(installtion_str.replace(/,/g,""));
 
@@ -57,18 +37,34 @@ function calcStart(){
     var month2_str = document.getElementById("sufficiency_month2").value;
     var month2 = parseInt(month2_str.replace(/,/g,""));
 
-    
+    if(zero(human_cost,room_cost,business,percent,time,installtion) == false){
+        alert ('0は入力出来ません');
+        return;
+    }
 
-    
+    if(!human_cost||!room_cost||!business||!percent||!time||!installtion){
+        alert ('必須項目を入力してください');
+        return;
+    }
+
+    if(under_zero(human_cost,room_cost,business,percent,time,installtion) == false){
+        alert ('0以下の数字は入力出来ません');
+        return;
+    }
+
+    if(over(business,percent,time,installtion) == false){
+        alert ('範囲外の数字は入力出来ません');
+        return;
+    }
 
     //最大施術可能数
     monthly_maxtreatment = max(installtion,business,time);
     
-    //月間粗利益見込み
+    //初期費用充足期間の計算に使用する月間粗利益見込み
     sufficiency_profit = profit(monthly_maxtreatment,percent);
     
 
-    //初期費用充足期間
+    //初期費用充足期間に使う計算
     month = prospect_month(installtion,sufficiency_profit);
     
     //月間売上見込み（人件費と家賃を除算）
@@ -76,7 +72,12 @@ function calcStart(){
     
     //初期費用充足期間（人件費と家賃を除算した月間売上見込みと導入数から計算
     month2 = prospect_month2(installtion,sufficiency_profit2);
-    
+
+    if(minus(sufficiency_profit2,month2) == false){
+        alert ('計算結果がマイナスのため、表示出来ません')
+        return;
+    }
+
     //数字型を文字型に変換（小数に変換）
     monthly_maxtreatment_str = monthly_maxtreatment.toLocaleString();
     document.getElementById("max_treatment").value = monthly_maxtreatment_str;
@@ -93,8 +94,8 @@ function calcStart(){
     month2_str = month2.toLocaleString();
     document.getElementById("sufficiency_month2").value = month2_str;
 
-   
 }
+
 
    //表内の計算メソッド
     function max(installtion,business,time){
@@ -124,5 +125,38 @@ function calcStart(){
     }
 
     //エラー発生時のメソッド
-    
-   
+    function under_zero(human_cost,room_cost,business,percent,time,installtion){
+        if(human_cost<0 || room_cost<0 || business<0 || percent<0 || time<0 || installtion<0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    function over(business,percent,time,installtion){
+        if(business>30 || percent>100 || time>24 || installtion>10){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    function zero(human_cost,room_cost,business,percent,time,installtion){
+        if(human_cost == 0 || room_cost == 0 || business == 0 || percent == 0 || time == 0 ||installtion == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    function minus(sufficiency_profit2,month2){
+        if(sufficiency_profit2<0 || month2<0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
