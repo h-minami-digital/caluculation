@@ -132,8 +132,9 @@ function calcStart(){
     if(!value){
         true;
     }
-    else if(!isNaN(value))
+    else if(!isNaN(value)){
         true;
+    }
     else{
         alert(columName +" 数値以外は入力出来ません");
         return false;
