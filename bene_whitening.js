@@ -4,21 +4,39 @@ function calcStart(){
     //変数を宣言(文字型を数字型に変換)
     var installtion_str = document.getElementById("installtion_number").value;
     var installtion = parseInt(installtion_str.replace(/,/g,""));
+    if(checkInputValue(installtion,"ベネホワイトニング機材導入数") == false){
+        return;
+    }
 
     var business_str = document.getElementById("business_number").value;
     var business = parseInt(business_str.replace(/,/g,""));
+    if(checkInputValue(business,"月間営業数") == false){
+        return;
+    }
 
     var time_str = document.getElementById("business_hour").value;
     var time = parseInt(time_str.replace(/,/g,""));
+    if(checkInputValue(time,"日の営業時間") == false){
+        return;
+    }
 
     var percent_str = document.getElementById("operation_percent").value;
     var percent = parseInt(percent_str.replace(/,/g,""));
+    if(checkInputValue(percent,"想定稼働率") == false){
+        return;
+    }
 
     var human_cost_str= document.getElementById("personnel_cost").value;
     var human_cost = parseInt(human_cost_str.replace(/,/g,""));
+    if(checkInputValue(human_cost,"人件費")==false){
+        return;
+    }
 
     var room_cost_str = document.getElementById("rent_cost").value;
     var room_cost = parseInt(room_cost_str.replace(/,/g,""));
+    if(checkInputValue(room_cost,"家賃") == false){
+        return;
+    }
 
     var monthly_maxtreatment_str = document.getElementById("max_treatment").value;
     var monthly_maxtreatment = parseInt(monthly_maxtreatment_str.replace(/,/g,""));
@@ -36,28 +54,24 @@ function calcStart(){
     var month2 = parseInt(month2_str.replace(/,/g,""));
 
     //計算する項目を入力する時点での条件
-    if(zero(human_cost,room_cost,business,percent,time,installtion) == false){
-        alert ('0は入力出来ません');
+    if(over(installtion,1,10,"ベネホワイトニング機材導入数") == false){
         return;
     }
 
-    if(!human_cost||!room_cost||!business||!percent||!time||!installtion){
-        alert ('必須項目を入力してください');
+    if(over(business,1,30,"月間営業数") == false){
         return;
     }
 
-    if(under_zero(human_cost,room_cost,business,percent,time,installtion) == false){
-        alert ('0以下の数字は入力出来ません');
+    if(over(time,2,24,"日の営業時間") == false){
         return;
     }
 
-    if(over(business,percent,time,installtion) == false){
-        alert ('範囲外の数字は入力出来ません');
+    if(over(percent,10,100,"想定稼働率") == false){
         return;
     }
 
     //最大施術可能数
-    monthly_maxtreatment = max(installtion,business,time);
+    monthly_maxtreatment = max_t(installtion,business,time);
     
     //初期費用充足期間の計算に使用する月間粗利益見込み
     sufficiency_profit = profit(monthly_maxtreatment,percent);
@@ -94,10 +108,30 @@ function calcStart(){
     document.getElementById("sufficiency_month2").value = month2_str;
 
 }
+    //入力値のチェック
+    function checkInputValue(value,columName){
 
+        //計算する項目を入力する時点での条件
+        if(value == 0){
+            alert(columName + ' 0は入力出来ません')
+            return false;
+        }
+
+        if(!value){
+            alert (columName + ' 必須項目を入力してください')
+            return false;
+        }
+
+        if(value<0){
+            alert(columName + ' 0以下の数字は入力出来ません')
+            return false;
+        }
+
+        return true;
+    }
 
    //表内の計算メソッド
-    function max(installtion,business,time){
+    function max_t(installtion,business,time){
         return installtion * business * time;
     }
 
@@ -124,26 +158,9 @@ function calcStart(){
     }
 
     //エラー発生時のメソッド
-    function under_zero(human_cost,room_cost,business,percent,time,installtion){
-        if(human_cost<0 || room_cost<0 || business<0 || percent<0 || time<0 || installtion<0){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-
-    function over(business,percent,time,installtion){
-        if(business>30||business<10 || percent>100||percent <10 || time>24||time<2 || installtion>10){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-
-    function zero(human_cost,room_cost,business,percent,time,installtion){
-        if(human_cost == 0 || room_cost == 0 || business == 0 || percent == 0 || time == 0 ||installtion == 0){
+    function over(value,min,max,columName){
+        if(value>max || value<min){
+            alert(columName + ' 範囲外の数字は入力出来ません');
             return false;
         }
         else{
