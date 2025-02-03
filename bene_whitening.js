@@ -62,7 +62,6 @@ function calcStart(){
     //初期費用充足期間の計算に使用する月間粗利益見込み
     sufficiency_profit = profit(monthly_maxtreatment,percent);
     
-
     //初期費用充足期間に使う計算
     month = prospect_month(installtion,sufficiency_profit);
     
