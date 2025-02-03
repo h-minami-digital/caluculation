@@ -4,36 +4,57 @@ function calcStart(){
     //変数を宣言(文字型を数字型に変換)
     var dounyuu_str = document.getElementById("dounyuu_number").value;
     var dounyuu = parseInt(dounyuu_str.replace(/,/g,""));
+    if(checkInputNan(dounyuu,"ベネホワイトニング機材導入数") == false){
+        return;
+    }
     if(checkInputValue(dounyuu,"ベネホワイトニング機材導入数") == false){
         return;
     }
+    
+
 
     var eigyoubi_str = document.getElementById("eigyou_number").value;
     var eigyoubi = parseInt(eigyoubi_str.replace(/,/g,""));
+    if(checkInputNan(eigyoubi,"月間営業数") == false){
+        return;
+    }
     if(checkInputValue(eigyoubi,"月間営業数") == false){
         return;
     }
 
     var eigyoujikan_str = document.getElementById("eigyou_time").value;
     var eigyoujikan = parseInt(eigyoujikan_str.replace(/,/g,""));
+    if(checkInputNan(eigyoujikan,"日の営業時間") == false){
+        return;
+    }
     if(checkInputValue(eigyoujikan,"日の営業時間") == false){
         return;
     }
 
     var kadouritsu_str = document.getElementById("operation_percent").value;
     var kadouritsu = parseInt(kadouritsu_str.replace(/,/g,""));
+    if(checkInputNan(kadouritsu,"想定稼働率") == false){
+        return;
+    }
     if(checkInputValue(kadouritsu,"想定稼働率") == false){
         return;
     }
 
     var jinnkennhi_str= document.getElementById("personnel_cost").value;
     var jinnkennhi = parseInt(jinnkennhi_str.replace(/,/g,""));
-    if(checkInputValue(jinnkennhi,"人件費")==false){
+    if(checkInputNan(jinnkennhi,"人件費") == false){
         return;
     }
+    if(checkInputValue(jinnkennhi,"人件費") == false){
+        return;
+    }
+    
 
     var yachin_str = document.getElementById("rent_cost").value;
     var yachin = parseInt(yachin_str.replace(/,/g,""));
+    if(checkInputNan(yachin,"家賃") == false){
+        return;
+    }
     if(checkInputValue(yachin,"家賃") == false){
         return;
     }
@@ -108,6 +129,17 @@ function calcStart(){
     document.getElementById("juusoku_month").value = juusoku_kikan_str;
 
 }
+
+    function checkInputNan(value,columName){
+    if(!isNaN(value)){
+        true;
+    }
+    else{
+        alert(columName +" 数値以外は入力出来ません");
+        return false;
+        }
+    }
+
     //入力値のチェック
     function checkInputValue(value,columName){
 
@@ -166,5 +198,7 @@ function calcStart(){
         else{
             return true;
         }
+
+        
     }
 
