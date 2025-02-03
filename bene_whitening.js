@@ -11,8 +11,6 @@ function calcStart(){
         return;
     }
     
-
-
     var eigyoubi_str = document.getElementById("eigyou_number").value;
     var eigyoubi = parseInt(eigyoubi_str.replace(/,/g,""));
     if(checkInputNan(eigyoubi,"月間営業数") == false){
@@ -48,7 +46,7 @@ function calcStart(){
     if(checkInputValue(jinnkennhi,"人件費") == false){
         return;
     }
-    
+   
 
     var yachin_str = document.getElementById("rent_cost").value;
     var yachin = parseInt(yachin_str.replace(/,/g,""));
@@ -131,9 +129,11 @@ function calcStart(){
 }
 
     function checkInputNan(value,columName){
-    if(!isNaN(value)){
+    if(!value){
         true;
     }
+    else if(!isNaN(value))
+        true;
     else{
         alert(columName +" 数値以外は入力出来ません");
         return false;
