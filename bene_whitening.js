@@ -1,61 +1,42 @@
 
 function calcStart(){
-    
+    console.log("kinki");
     //変数を宣言(文字型を数字型に変換)
     var dounyuu_str = document.getElementById("dounyuu_number").value;
+    if(checkAndParseInputValue(dounyuu_str,"ベネホワイトニング機材導入数") == false){
+        return;
+    }
     var dounyuu = parseInt(dounyuu_str.replace(/,/g,""));
-    if(checkInputNan(dounyuu,"ベネホワイトニング機材導入数") == false){
-        return;
-    }
-    if(checkInputValue(dounyuu,"ベネホワイトニング機材導入数") == false){
-        return;
-    }
     
     var eigyoubi_str = document.getElementById("eigyou_number").value;
+    if(checkAndParseInputValue(eigyoubi_str,"月間営業数") == false){
+        return;
+    }
     var eigyoubi = parseInt(eigyoubi_str.replace(/,/g,""));
-    if(checkInputNan(eigyoubi,"月間営業数") == false){
-        return;
-    }
-    if(checkInputValue(eigyoubi,"月間営業数") == false){
-        return;
-    }
 
     var eigyoujikan_str = document.getElementById("eigyou_time").value;
+    if(checkAndParseInputValue(eigyoujikan_str,"日の営業時間") == false){
+        return;
+    }
     var eigyoujikan = parseInt(eigyoujikan_str.replace(/,/g,""));
-    if(checkInputNan(eigyoujikan,"日の営業時間") == false){
-        return;
-    }
-    if(checkInputValue(eigyoujikan,"日の営業時間") == false){
-        return;
-    }
 
     var kadouritsu_str = document.getElementById("operation_percent").value;
+    if(checkAndParseInputValue(kadouritsu_str,"想定稼働率") == false){
+        return;
+    }
     var kadouritsu = parseInt(kadouritsu_str.replace(/,/g,""));
-    if(checkInputNan(kadouritsu,"想定稼働率") == false){
-        return;
-    }
-    if(checkInputValue(kadouritsu,"想定稼働率") == false){
-        return;
-    }
 
     var jinnkennhi_str= document.getElementById("personnel_cost").value;
+    if(checkAndParseInputValue(jinnkennhi_str,"人件費") == false){
+        return;
+    }
     var jinnkennhi = parseInt(jinnkennhi_str.replace(/,/g,""));
-    if(checkInputNan(jinnkennhi,"人件費") == false){
-        return;
-    }
-    if(checkInputValue(jinnkennhi,"人件費") == false){
-        return;
-    }
-   
 
     var yachin_str = document.getElementById("rent_cost").value;
+    if(checkAndParseInputValue(yachin_str,"家賃") == false){
+        return;
+    }
     var yachin = parseInt(yachin_str.replace(/,/g,""));
-    if(checkInputNan(yachin,"家賃") == false){
-        return;
-    }
-    if(checkInputValue(yachin,"家賃") == false){
-        return;
-    }
 
     var gekkann_maxsejutsu_str = document.getElementById("max_sejutsu").value;
     var gekkann_maxsejutsu = parseInt(gekkann_maxsejutsu_str.replace(/,/g,""));
@@ -128,38 +109,31 @@ function calcStart(){
 
 }
 
-    function checkInputNan(value,columName){
-    if(!value){
-        true;
-    }
-    else if(!isNaN(value)){
-        true;
-    }
-    else{
-        alert(columName +" 数値以外は入力出来ません");
-        return false;
-        }
-    }
-
     //入力値のチェック
-    function checkInputValue(value,columName){
+    function checkAndParseInputValue(valuestr,columName){
 
         //計算する項目を入力する時点での条件
-        if(value == 0){
-            alert(columName + ' 0は入力出来ません')
-            return false;
-        }
-
-        if(!value){
+        if(valuestr==""){
             alert (columName + ' 必須項目を入力してください')
             return false;
         }
 
-        if(value<0){
-            alert(columName + ' 0以下の数字は入力出来ません')
+        var value = parseInt(valuestr.replace(/,/g,""));
+
+        if(!value){
+            alert(columName + '　必須項目を入力してください')
             return false;
         }
 
+        if(value == 0){
+            alert(columName + ' 0は入力出来ません');
+            return false;
+        }
+
+        if(value<0){
+            alert(columName + ' 0以下の数字は入力出来ません');
+            return false;
+        }
         return true;
     }
 
