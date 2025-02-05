@@ -62,11 +62,11 @@ function calcStart(){
         return;
     }
 
-    if(checkInput_range(eigyoujikan,2,24,"日の営業時間") == false){
+    if(checkInput_range(eigyoujikan,1,24,"日の営業時間") == false){
         return;
     }
 
-    if(checkInput_range(kadouritsu,10,100,"想定稼働率") == false){
+    if(checkInput_range(kadouritsu,1,100,"想定稼働率") == false){
         return;
     }
 
@@ -84,12 +84,6 @@ function calcStart(){
     
     //初期費用充足期間（人件費と家賃を除算した月間売上見込みと導入数から計算
     juusoku_kikan = syokitoushi_juusoku(dounyuu,gekkan_rieki);
-
-    //計算結果がマイナスになった時の条件分岐
-    if(gekkan_rieki<0 || juusoku_kikan<0){
-        alert ('計算結果がマイナスのため、表示出来ません')
-        return;
-    }
 
     //数字型を文字型に変換（小数に変換）
     gekkann_maxsejutsu_str = gekkann_maxsejutsu.toLocaleString();
@@ -120,13 +114,8 @@ function calcStart(){
 
         var value = parseInt(valuestr.replace(/,/g,""));
 
-        if(!value){
-            alert(columName + '　必須項目を入力してください')
-            return false;
-        }
-
-        if(value == 0){
-            alert(columName + ' 0は入力出来ません');
+        if(isNaN(value)){
+            alert(columName + ' 必須項目を入力してください')
             return false;
         }
 
