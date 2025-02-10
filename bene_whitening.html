@@ -23,29 +23,23 @@
             </tr>
 
             <tr>
-            <td class = "name">月間営業数</td>
+            <td class = "name">月間営業日数</td>
             <td class = "record"><input id="eigyou_number" type="number" min="10" max="30" step="1" value="21" style="width:50px;"></td>
             <td class = "unit">日(10～30)</td>
             </tr>
            
             <tr>
-            <td class = "name">日の営業時間</td>
+            <td class = "name">1日の営業時間</td>
             <td class = "record"><input id="eigyou_time" type="number" min="1" max="24" step="1" value="8" style="width:50px;"></td>
             <td class = "unit">時間(1～24)</td>
             </tr>
-        
+            
             <tr>
-            <td class = "name">最大施術可能数</td>
-            <td class = "record"><input id="max_sejutsu" type="text" tabindex="-1" readonly></td>
-            <td class = "unit">件</td>
+            <td class = "name">プレミアムコース施術比率</td>
+            <td class = "record"><input id="premium_hiritsu" type="number" min="1" max="100" step="1" value ="50" style="width:50px;"></td>
+            <td class = "unit">%</td>
             </tr>
-        
-            <tr>
-            <td class = "name">想定稼働率</td>
-            <td class = "record"><input id="operation_percent" type="number" min="1" max="100" step="1" value="50" style="width:50px;"></td>
-            <td class = "unit">%(1～100)</td>
-            </tr>
-
+      
             <tr>
             <td class = "name">人件費</td>
             <td class = "record"><input id="personnel_cost" type="text"></td>
@@ -57,19 +51,45 @@
             <td class = "record"><input id="rent_cost" type="text"></td>
             <td class = "unit">円/月</td>
             </tr>
+          </tbody>
+          <thead>
+            <tr>
+              <th class = "column_record">稼働率</th>
+              <th class = "column_number">月間利益収益見込み</th>
+              <th class = "column_unit">初期費用充足期間</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+            <td class = "name">100%</td>
+            <td class = "record"><input id="kadou100" type="text" readonly>円/月</td>
+            <td class = "unit"><input id="month100" type="text" readonly>ヶ月</td>
+            </tr>
 
             <tr>
-            <td class = "name">月間利益見込み</td>
-            <td class = "record"><input id="monthly_rieki" type="text" readonly tabindex="-1"></td>
-            <td class = "unit">円/月</td>
+            <td class ="name">80%</td>
+            <td class = "record"><input id="kadou80" type="text" readonly>円/月</td>
+            <td class = "unit"><input id="month80" type="text" readonly>ヶ月</td>
             </tr>
-        
+
             <tr>
-            <td class = "name">初期費用充足期間</td>
-            <td class = "record"><input id="juusoku_month" type="text" readonly tabindex="-1"></td>
-            <td class = "unit">ヶ月</td>
+            <td class ="name">60%</td>
+            <td class = "record"><input id="kadou60" type="text" readonly>円/月</td>
+            <td class = "unit"><input id="month60" type="text" readonly>ヶ月</td>
             </tr>
-        </tbody>
+            
+            <tr>
+            <td class ="name">40%</td>
+            <td class = "record"><input id="kadou40" type="text" readonly>円/月</td>
+            <td class = "unit"><input id="month40" type="text" readonly>ヶ月</td>
+            </tr>
+
+            <tr>
+            <td class ="name">20%</td>
+            <td class = "record"><input id="kadou20" type="text" readonly>円/月</td>
+            <td class = "unit"><input id="month20" type="text" readonly>ヶ月</td>
+            </tr>
+          </tbody>
     </table>
         <br>
         <button onclick = "calcStart()">計算</button>
