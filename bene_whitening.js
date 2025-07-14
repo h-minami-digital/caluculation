@@ -3,7 +3,7 @@ function calcStart(){
     
     //手入力する数字の変数を宣言
     var dounyuu_str = document.getElementById("dounyuu_number").value;
-    if(checkAndParseInputValue(dounyuu_str,"ベネホワイトニング機材導入数") == false){
+    if(checkAndParseInputValue(dounyuu_str,"WOBHホワイトニング機材導入数") == false){
         return;
     }
     var dounyuu = parseInt(dounyuu_str.replace(/,/g,""));
@@ -21,7 +21,7 @@ function calcStart(){
     var eigyoujikan = parseInt(eigyoujikan_str.replace(/,/g,""));
 
     var premium_sejutsuhiritsu_str = document.getElementById("premium_hiritsu").value;
-    if(checkAndParseInputValue(premium_sejutsuhiritsu_str,"プレミアムコース施術比率") == false){
+    if(checkAndParseInputValue(premium_sejutsuhiritsu_str,"リペアコース施術比率") == false){
         return;
     }
     var premium_sejutsuhiritsu = parseInt(premium_sejutsuhiritsu_str.replace(/,/g,""));
@@ -75,7 +75,7 @@ function calcStart(){
     var juusoku20 = parseInt(juusoku20_str.replace(/,/g,""));
 
     //計算する項目を入力する時点での条件
-    if(checkInput_range(dounyuu,1,10,"ベネホワイトニング機材導入数") == false){
+    if(checkInput_range(dounyuu,1,10,"WOBHホワイトニング機材導入数") == false){
         return;
     }
 
@@ -87,7 +87,7 @@ function calcStart(){
         return;
     }
 
-    if(checkInput_range(premium_sejutsuhiritsu,1,100,"プレミアムコース施術比率") == false){
+    if(checkInput_range(premium_sejutsuhiritsu,1,100,"リペアコース施術比率") == false){
         return;
     }
 
@@ -213,7 +213,7 @@ function calcStart(){
     }
 
     function arari_mikomi(gekkann_maxsejutsu,premium_hiritsu){
-        return 7000*(gekkann_maxsejutsu*(premium_hiritsu/100))+4000*(gekkann_maxsejutsu*(1-(premium_hiritsu/100)));
+        return 6300*(gekkann_maxsejutsu*(premium_hiritsu/100))+3600*(gekkann_maxsejutsu*(1-(premium_hiritsu/100)));
     }
 
     function syuueki_mikomicalc(value,gekkann_arari,yachin,jinnkennhi){
